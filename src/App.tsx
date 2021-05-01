@@ -18,13 +18,13 @@ function App() {
     <div className="App">
       <h1> Appointment APp</h1>
       <Main />
-      {avaibleTimes(timesToHide).map((el, index) => {
+      {/* {avaibleTimes(timesToHide).map((el, index) => {
         return (
           <p key={index} onClick={() => setTimesToHide([...timesToHide, el])}>
             {el}
           </p>
         );
-      })}
+      })} */}
     </div>
   );
 }

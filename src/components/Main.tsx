@@ -1,25 +1,30 @@
 import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../Redux/hooks";
 import Servicepicker from "./servicepicker/Servicepicker";
 import Timepicker from "./timepicker/Timepicker";
 
 const Main = () => {
   const [page, setPage] = useState<number>(0);
   const [service, setService] = useState<string>("");
-  const showpage = () => {
-    switch (page) {
-      case 1:
-        return <Servicepicker service={service} setService={setService} />;
-      case 2:
-        return <Timepicker />;
-      default:
-        return <p>error</p>;
-    }
-  };
+  const [toggle, setToggle] = useState<string>("time");
+  const count = useAppSelector((state) => state.bookerSlice);
+  const dispatch = useAppDispatch();
+  console.log(count);
   return (
-    <div>
-      <button onClick={() => setPage((prev) => prev + 1)}> NEXT</button>
-      <button onClick={() => setPage((prev) => prev - 1)}> Back</button>
-      {showpage()}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "green",
+        height: "100%",
+      }}
+    >
+      <Servicepicker
+        service={service}
+        setService={setService}
+        toggleProp={toggle === "service"}
+      />
+      <Timepicker />
     </div>
   );
 };
