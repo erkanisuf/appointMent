@@ -7,7 +7,10 @@ import AvaibleTimes from "./AvaibleTimes";
 
 const doctor = [];
 const Timepicker = () => {
-  const [page, setPage] = useState<number>(0);
+  const { startTime, date } = useAppSelector(
+    (state) => state.bookerSlice.appointment
+  ); //Redux selector
+  const [page, setPage] = useState<number>(0); // sets page of the calendars weekd
 
   // This function creates calendar ref: https://stackoverflow.com/questions/39786372/creating-a-custom-calendar-with-moment-using-days-weeks-and-headings
   const getDays = () => {
@@ -26,11 +29,28 @@ const Timepicker = () => {
     return calendar;
   };
 
+  type IchangePage = "next" | "prev";
+  const changePage = (e: IchangePage) => {
+    if (e === "next") {
+      page < getDays().length - 1 && setPage((prev) => prev + 1); //getDays().lenght gives the number of weeks for the whole year (-1) to be exacy until 31.12
+    } else if (e === "prev") {
+      page > 0 && setPage((prev) => prev - 1);
+    }
+  };
   return (
-    <Wrapper title={"Time picker"} stepNumber={2}>
+    <Wrapper
+      title={"Time picker"}
+      stepNumber={3}
+      info={
+        <div>
+          <span>{startTime.startTime}</span>
+          <span>{date}</span>
+        </div>
+      }
+    >
       <p>Pick a Time</p>
-      <button onClick={() => setPage((prev) => prev - 1)}>Prev</button>
-      <button onClick={() => setPage((prev) => prev + 1)}>Next</button>
+      <button onClick={() => changePage("prev")}>Prev</button>
+      <button onClick={() => changePage("next")}>Next</button>
 
       {getDays()
         .splice(page, 1)

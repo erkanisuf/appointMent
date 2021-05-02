@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../Redux/hooks";
+import AppointmentForm from "./AppointmentForm/AppointmentForm";
 import Servicepicker from "./servicepicker/Servicepicker";
 import Timepicker from "./timepicker/Timepicker";
+import Workerpicker from "./workerpicker/Workerpicker";
 
 const Main = () => {
-  const [page, setPage] = useState<number>(0);
-  const [service, setService] = useState<string>("");
-  const [toggle, setToggle] = useState<string>("time");
-  const count = useAppSelector((state) => state.bookerSlice);
-  const dispatch = useAppDispatch();
-  console.log(count);
   return (
     <div
       style={{
@@ -19,12 +15,10 @@ const Main = () => {
         height: "100%",
       }}
     >
-      <Servicepicker
-        service={service}
-        setService={setService}
-        toggleProp={toggle === "service"}
-      />
+      <Servicepicker />
+      <Workerpicker />
       <Timepicker />
+      <AppointmentForm />
     </div>
   );
 };

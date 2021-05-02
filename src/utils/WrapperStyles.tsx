@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// Section is like Container of the <Wrapper /> component
 export const Section = styled.div`
   width: 80%;
   height: 100%;
@@ -8,6 +9,7 @@ export const Section = styled.div`
   margin: 0 auto;
 `;
 
+//ToggleDiv for the props.children of the <Wrapper /> Component , its toggling depending on state
 interface IToggleDiv {
   toggle: boolean;
 }
@@ -19,6 +21,6 @@ export const ToggleDiv = styled.div<IToggleDiv>`
   opacity: ${(props) => (props.toggle ? "1" : "0")};
   background-color: #6b3da7;
   transform: ${(props) =>
-    props.toggle ? "translateY(-1em)" : "translateY(-0.5em)"};
+    props.toggle ? "translateY(0)" : "translateY(20px)"};
   transition: 0.3s;
 `;

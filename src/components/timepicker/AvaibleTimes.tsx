@@ -1,7 +1,11 @@
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
-import { changeDate, changeStartTime } from "../../Redux/Slices/bookerSlice";
+import {
+  changeDate,
+  changeStartTime,
+  nextStep,
+} from "../../Redux/Slices/bookerSlice";
 import { avaibleTimes, notAvaibleTimes } from "../../utils/Functions";
 import { v4 as uuidv4 } from "uuid";
 
@@ -15,25 +19,32 @@ const appointments = [
   { date: "2021-05-03 00:00:00.000", startTime: "09:00", duration: 35 },
   { date: "2021-05-08 00:00:00.000", startTime: "09:00", duration: 45 },
 ];
-const doctor = [
+const worker1 = [
   { date: "2021-05-01 00:00:00.000", workStart: "09:00", workEnd: 17 },
   { date: "2021-05-02 00:00:00.000", workStart: "15:30", workEnd: 15 },
   { date: "2021-05-03 00:00:00.000", workStart: "09:00", workEnd: 14 },
   { date: "2021-05-08 00:00:00.000", workStart: "09:00", workEnd: 12 },
 ];
+const worker2 = [
+  { date: "2021-05-03 00:00:00.000", workStart: "09:00", workEnd: 18 },
+  { date: "2021-05-08 00:00:00.000", workStart: "09:00", workEnd: 12 },
+];
+const doctor = worker2;
 const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {
   const [select, setSelect] = useState<string>("");
   const REDUXselected = useAppSelector(
     (state) => state.bookerSlice.appointment.startTime
-  );
-  const dispatch = useAppDispatch();
+  ); //selected time (with uuid ID) , use of this is for the styling
+  const dispatch = useAppDispatch(); // Redux dispatch
 
   const REDUXchangeTime = (e: string) => {
     const randomID = uuidv4();
-    dispatch(changeStartTime({ startTime: e, id: randomID }));
-    dispatch(changeDate(dayItem.format("MMM Do YY")));
-    setSelect(randomID);
+    dispatch(changeStartTime({ startTime: e, id: randomID })); // Changes Appointment`s start time
+    dispatch(changeDate(dayItem.format("MMM Do YY"))); // Changes Appointment`s date day prop comes from <TimePicker />
+    setSelect(randomID); // this one is in combination with REDUXselected for styling . Otherwise styling doesnt get marked.
+    dispatch(nextStep(4));
   };
+
   const isWorkingDay = (e: string) => {
     let workstart: number = 0;
     let workend: number = 0;
