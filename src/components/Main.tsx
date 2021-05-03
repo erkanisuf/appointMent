@@ -9,10 +9,16 @@ const Main = () => {
   return (
     <div
       style={{
+        width: "90%",
+        margin: "0 auto",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "green",
+        backgroundColor: "#ffffff",
         height: "100%",
+        minHeight: "75vh",
+        borderRadius: "15px",
+        alignContent: "center",
+        justifyContent: "center",
       }}
     >
       <Servicepicker />

@@ -15,8 +15,8 @@ function App() {
   ]);
 
   return (
-    <div className="App">
-      <h1> Appointment APp</h1>
+    <div className="App" style={{ minHeight: "100vh" }}>
+      <div style={{ height: "100px" }}></div>
       <Main />
       {/* {avaibleTimes(timesToHide).map((el, index) => {
         return (

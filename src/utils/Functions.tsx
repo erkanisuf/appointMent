@@ -1,5 +1,5 @@
 // Convert String time to Minutes (other fucntions require minutes value)
-export const stringTimeToMinutes = (input: string) => {
+export const stringTimeToMinutes = (input: string): number => {
   let hms = input; //  string e.g "09:45:33"
   let a = hms.split(":"); // split it at the colons
   // eg if 9:45 returns 585 minutes
@@ -12,10 +12,10 @@ export const avaibleTimes = (
   timestohide: string[],
   startWork: number,
   endWork: number
-) => {
+): string[] => {
   let minutesInterval = 15; //minutes interval
   let times = []; // time array
-  let minutes = 540; // Value of minutes  e.g start time 540 / 60 = 9 hours
+  let minutes = startWork; // Value of minutes  e.g start time 540 / 60 = 9 hours
 
   //loop that pushes the times to times array
   for (let i = 0; minutes < endWork * 60; i++) {
@@ -32,7 +32,7 @@ export const avaibleTimes = (
 export const notAvaibleTimes = (
   minutesParam: number,
   durationParam: number
-) => {
+): string[] => {
   let minutesInterval = 15; //minutes interval
   let times = []; // time array
   let minutes = minutesParam; // Value of minutes  e.g start time 540 / 60 = 9 hours

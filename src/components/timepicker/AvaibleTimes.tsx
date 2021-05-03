@@ -13,23 +13,23 @@ interface IAvaibleTimes {
   dayItem: moment.Moment;
 }
 const appointments = [
-  { date: "2021-05-01 00:00:00.000", startTime: "09:00", duration: 60 },
+  { date: "2021-05-01 00:00:00.000", startTime: "09:00", duration: 30 },
   { date: "2021-05-01 00:00:00.000", startTime: "14:30", duration: 30 },
   { date: "2021-05-02 00:00:00.000", startTime: "15:30", duration: 25 },
   { date: "2021-05-03 00:00:00.000", startTime: "09:00", duration: 35 },
   { date: "2021-05-08 00:00:00.000", startTime: "09:00", duration: 45 },
 ];
 const worker1 = [
-  { date: "2021-05-01 00:00:00.000", workStart: "09:00", workEnd: 17 },
+  { date: "2021-05-01 00:00:00.000", workStart: "08:00", workEnd: 17 },
   { date: "2021-05-02 00:00:00.000", workStart: "15:30", workEnd: 15 },
   { date: "2021-05-03 00:00:00.000", workStart: "09:00", workEnd: 14 },
   { date: "2021-05-08 00:00:00.000", workStart: "09:00", workEnd: 12 },
 ];
 const worker2 = [
-  { date: "2021-05-03 00:00:00.000", workStart: "09:00", workEnd: 18 },
+  { date: "2021-05-03 00:00:00.000", workStart: "12:00", workEnd: 18 },
   { date: "2021-05-08 00:00:00.000", workStart: "09:00", workEnd: 12 },
 ];
-const doctor = worker2;
+const doctor = worker1;
 const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {
   const [select, setSelect] = useState<string>("");
   const REDUXselected = useAppSelector(
@@ -49,7 +49,7 @@ const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {
     let workstart: number = 0;
     let workend: number = 0;
 
-    // Finds Work Schedule of the worker
+    // Finds Work Schedule of the worker for the day
     const matchWorkTimes = doctor.filter(
       (el) => moment(el.date).format("MMM Do YY") === e
     );

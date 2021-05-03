@@ -1,12 +1,30 @@
 import styled from "styled-components";
 
+//colors
+export const greyishColor = "#f0f4f7";
+export const blueColor = "#518bff";
+export const h1Color = "#3d4656";
+export const toggleDivbackground = "#ffffff";
+export const radiusborder = "15px";
+export const errorColor = "#f42a62";
+//font sizes
+export const h1Size = "18px";
+export const errorSize = "13px";
 // Section is like Container of the <Wrapper /> component
 export const Section = styled.div`
-  width: 80%;
+  width: 50%;
   height: 100%;
-  background-color: #b4b3b3;
-  border: 1px solid black;
-  margin: 0 auto;
+  background-color: ${greyishColor};
+  border-radius: ${radiusborder};
+  margin: 2px auto;
+
+  h1 {
+    font-size: ${h1Size};
+    color: ${h1Color};
+    cursor: pointer;
+    margin: 15px;
+    font-weight: 400;
+  }
 `;
 
 //ToggleDiv for the props.children of the <Wrapper /> Component , its toggling depending on state
@@ -15,12 +33,21 @@ interface IToggleDiv {
 }
 export const ToggleDiv = styled.div<IToggleDiv>`
   width: 100%;
-  height: ${(props) => (props.toggle ? "100%" : "0")};
-  min-height: ${(props) => (props.toggle ? "100%" : "0")};
-  visibility: ${(props) => (props.toggle ? "visible" : "hidden")};
-  opacity: ${(props) => (props.toggle ? "1" : "0")};
-  background-color: #6b3da7;
-  transform: ${(props) =>
-    props.toggle ? "translateY(0)" : "translateY(20px)"};
-  transition: 0.3s;
+  display: ${(props) => (props.toggle ? "flex" : "none")};
+  flex-direction: column;
+  background-color: ${toggleDivbackground};
+  border: 1px solid ${greyishColor};
+  border-bottom-left-radius: ${radiusborder};
+  border-bottom-right-radius: ${radiusborder};
+`;
+interface IDivErrorv {
+  display: boolean;
+}
+export const DivError = styled.div<IDivErrorv>`
+  background-color: ${errorColor};
+  color: white;
+  font-size: ${errorSize};
+  border-radius: 5px;
+  padding: 3px;
+  display: ${(props) => (props.display ? "block" : "none")};
 `;
