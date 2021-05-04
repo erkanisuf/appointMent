@@ -1,15 +1,17 @@
 import styled from "styled-components";
 
 //colors
-export const greyishColor = "#f0f4f7";
+export const greyishColor = "#e4e8eb";
 export const blueColor = "#518bff";
 export const h1Color = "#3d4656";
 export const toggleDivbackground = "#ffffff";
 export const radiusborder = "15px";
 export const errorColor = "#f42a62";
+export const greenColor = "#32d386";
 //font sizes
 export const h1Size = "18px";
 export const errorSize = "13px";
+export const pSize = "13px";
 // Section is like Container of the <Wrapper /> component
 export const Section = styled.div`
   width: 50%;
@@ -31,6 +33,7 @@ export const Section = styled.div`
 interface IToggleDiv {
   toggle: boolean;
 }
+
 export const ToggleDiv = styled.div<IToggleDiv>`
   width: 100%;
   display: ${(props) => (props.toggle ? "flex" : "none")};
@@ -48,6 +51,27 @@ export const DivError = styled.div<IDivErrorv>`
   color: white;
   font-size: ${errorSize};
   border-radius: 5px;
-  padding: 3px;
-  display: ${(props) => (props.display ? "block" : "none")};
+  padding: 5px;
+  display: ${(props) => (props.display ? "flex" : "none")};
+  margin: 0px 15px;
+  min-width: 20%;
+  justify-content: space-between;
+  span {
+    margin: 0 auto;
+  }
+`;
+
+export const DivInfo = styled.div<IDivErrorv>`
+  background-color: ${greenColor};
+  color: white;
+  font-size: ${errorSize};
+  border-radius: 5px;
+  padding: 5px;
+  display: ${(props) => (props.display ? "flex" : "none")};
+  margin: 0px 15px;
+  min-width: 20%;
+  justify-content: space-between;
+  span {
+    margin: 0 auto;
+  }
 `;

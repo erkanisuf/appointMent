@@ -7,6 +7,7 @@ import {
   nextStep,
 } from "../../Redux/Slices/bookerSlice";
 import Wrapper from "../../utils/Wrapper";
+import { StyleItemWorker } from "./WorkerStyles";
 
 const workers = [
   { workername: "erko", id: 1 },
@@ -22,13 +23,34 @@ const Workerpicker = () => {
   };
   return (
     <Wrapper title={"Select worker"} stepNumber={2} info={workername}>
-      {workers.map((el, index) => {
-        return (
-          <p key={index} onClick={() => changeReduxService(el)}>
-            {el.workername}
-          </p>
-        );
-      })}{" "}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          flexWrap: "wrap",
+          margin: "0 auto",
+          width: "100%",
+        }}
+      >
+        {workers.map((el, index) => {
+          return (
+            <StyleItemWorker key={index} onClick={() => changeReduxService(el)}>
+              <div>
+                {" "}
+                <img
+                  src="https://www.pinnaclecare.com/wp-content/uploads/2017/12/bigstock-African-young-doctor-portrait-28825394.jpg.webp"
+                  alt="random"
+                />
+              </div>
+
+              <div>
+                <p>{el.workername}</p>
+                <p>Kampaaja</p>
+              </div>
+            </StyleItemWorker>
+          );
+        })}{" "}
+      </div>
     </Wrapper>
   );
 };

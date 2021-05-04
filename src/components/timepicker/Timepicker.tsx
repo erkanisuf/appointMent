@@ -41,12 +41,7 @@ const Timepicker = () => {
     <Wrapper
       title={"Time picker"}
       stepNumber={3}
-      info={
-        <div>
-          <span>{startTime.startTime}</span>
-          <span>{date}</span>
-        </div>
-      }
+      info={startTime.startTime + date}
     >
       <p>Pick a Time</p>
       <button onClick={() => changePage("prev")}>Prev</button>

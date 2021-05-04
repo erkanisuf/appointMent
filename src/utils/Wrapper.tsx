@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../Redux/hooks";
 import { nextStep } from "../Redux/Slices/bookerSlice";
-import { Section, DivError, ToggleDiv } from "./WrapperStyles";
-import { ArrowDown, ArrowUp, ErrorIcon } from "../utils/IconsStyled";
+import { Section, DivError, ToggleDiv, DivInfo } from "./WrapperStyles";
+import { ArrowDown, ArrowUp, ErrorIcon, OKIcon } from "../utils/IconsStyled";
 interface IWrapper {
   children: React.ReactNode;
   title: string;
   stepNumber: number;
-  info: React.ReactNode;
+  info: string;
 }
 // Example usage:    <Wrapper title={"Some string name here"} stepNumber={1}> // stepNumber if matches with redux Step , then component toggles to true;
 const Wrapper: React.FC<IWrapper> = ({ children, title, stepNumber, info }) => {
@@ -56,16 +56,16 @@ const Wrapper: React.FC<IWrapper> = ({ children, title, stepNumber, info }) => {
       >
         <h1 onClick={Toggle}>
           {toggle ? <ArrowUp /> : <ArrowDown />} {stepNumber}.{title}
-          <DivError display={error ? true : false}>
-            {error && (
-              <span>
-                <ErrorIcon /> {error}
-              </span>
-            )}
-          </DivError>
         </h1>
-
-        <div>{info}</div>
+        {/* Info display of the selected item by the user (state from redux) */}
+        <DivInfo display={info !== ""}>
+          <OKIcon />
+          <span>{info}</span>
+        </DivInfo>
+        <DivError display={error ? true : false}>
+          <ErrorIcon />
+          <span>{error}</span>
+        </DivError>
       </div>
 
       <ToggleDiv toggle={toggle}>{children}</ToggleDiv>

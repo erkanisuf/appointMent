@@ -6,10 +6,14 @@ import {
   nextStep,
 } from "../../Redux/Slices/bookerSlice";
 import Wrapper from "../../utils/Wrapper";
+import { StyleItem } from "./ServiceStyles";
 
 const services = [
   { servicename: "Haircut", id: 1 },
   { servicename: "BlowDry", id: 2 },
+  { servicename: "Wash", id: 3 },
+  { servicename: "Wash", id: 32 },
+  { servicename: "Wash", id: 3 },
   { servicename: "Wash", id: 3 },
 ];
 const Servicepicker = () => {
@@ -23,13 +27,35 @@ const Servicepicker = () => {
   };
   return (
     <Wrapper title={"Select service"} stepNumber={1} info={servicename}>
-      {services.map((el, index) => {
-        return (
-          <p key={index} onClick={() => changeReduxService(el)}>
-            {el.servicename}
-          </p>
-        );
-      })}{" "}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          flexWrap: "wrap",
+          margin: "0 auto",
+          width: "100%",
+        }}
+      >
+        {services.map((el, index) => {
+          return (
+            <StyleItem key={index} onClick={() => changeReduxService(el)}>
+              <div>
+                {" "}
+                <img
+                  src="https://www.svgrepo.com/show/20577/vaccine.svg"
+                  alt="random"
+                  width="50px"
+                />
+              </div>
+
+              <div>
+                <p>{el.servicename}</p>
+                <p>35 €</p>
+              </div>
+            </StyleItem>
+          );
+        })}{" "}
+      </div>
     </Wrapper>
   );
 };
