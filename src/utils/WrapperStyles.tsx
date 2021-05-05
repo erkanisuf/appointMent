@@ -27,6 +27,9 @@ export const Section = styled.div`
     margin: 15px;
     font-weight: 400;
   }
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 //ToggleDiv for the props.children of the <Wrapper /> Component , its toggling depending on state

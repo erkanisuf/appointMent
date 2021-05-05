@@ -8,6 +8,7 @@ import {
 } from "../../Redux/Slices/bookerSlice";
 import { avaibleTimes, notAvaibleTimes } from "../../utils/Functions";
 import { v4 as uuidv4 } from "uuid";
+import { TimeItem } from "./TimepickerStyles";
 
 interface IAvaibleTimes {
   dayItem: moment.Moment;
@@ -20,9 +21,9 @@ const appointments = [
   { date: "2021-05-08 00:00:00.000", startTime: "09:00", duration: 45 },
 ];
 const worker1 = [
-  { date: "2021-05-01 00:00:00.000", workStart: "08:00", workEnd: 17 },
-  { date: "2021-05-02 00:00:00.000", workStart: "15:30", workEnd: 15 },
-  { date: "2021-05-03 00:00:00.000", workStart: "09:00", workEnd: 14 },
+  { date: "2021-05-05 00:00:00.000", workStart: "08:00", workEnd: 17 },
+  { date: "2021-05-06 00:00:00.000", workStart: "15:30", workEnd: 16 },
+  { date: "2021-05-07 00:00:00.000", workStart: "09:00", workEnd: 14 },
   { date: "2021-05-08 00:00:00.000", workStart: "09:00", workEnd: 12 },
 ];
 const worker2 = [
@@ -82,22 +83,24 @@ const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {
     }
   };
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       {/* Function checks if worker has schedule this day and loops the times that he is booked*/}
       {isWorkingDay(dayItem.format("MMM Do YY")).map((el, index) => {
         return (
-          <p
+          <TimeItem
+            active={
+              REDUXselected.id === select && REDUXselected.startTime === el
+            }
             key={index}
-            style={{
-              backgroundColor:
-                REDUXselected.id === select && REDUXselected.startTime === el
-                  ? "red"
-                  : "",
-            }}
             onClick={() => REDUXchangeTime(el)}
           >
-            {el}
-          </p>
+            {el.length ? el : "Not avaible"}
+          </TimeItem>
         );
       })}
     </div>

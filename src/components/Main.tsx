@@ -19,6 +19,7 @@ const Main = () => {
         borderRadius: "15px",
         alignContent: "center",
         justifyContent: "center",
+        padding: "15px 0px",
       }}
     >
       <Servicepicker />

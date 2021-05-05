@@ -1,11 +1,12 @@
 import moment from "moment";
 import React, { useState } from "react";
 import { useAppSelector } from "../../Redux/hooks";
-import { avaibleTimes, notAvaibleTimes } from "../../utils/Functions";
+import { NextIcon, PrevIcon } from "../../utils/IconsStyled";
+
 import Wrapper from "../../utils/Wrapper";
 import AvaibleTimes from "./AvaibleTimes";
+import { BtnsContainer, DayContainer } from "./TimepickerStyles";
 
-const doctor = [];
 const Timepicker = () => {
   const { startTime, date } = useAppSelector(
     (state) => state.bookerSlice.appointment
@@ -16,16 +17,18 @@ const Timepicker = () => {
   const getDays = () => {
     const calendar = [];
     const today = moment();
-    const startDay = today.clone().startOf("month").startOf("day"); // from where to start
+    const startDay = today.clone().startOf("day"); // from where to start
     const endDay = today.clone().endOf("month").endOf("year"); // until when
     let date = startDay.clone().subtract(1, "day");
-    // Loop makes arry with the days 1-7
+
+    // Loop makes arry with the days 1-7 until end of year
     while (date.isBefore(endDay, "day"))
       calendar.push({
         days: Array(7)
           .fill(0)
           .map(() => date.add(1, "day").clone()),
       });
+    console.log(calendar);
     return calendar;
   };
 
@@ -44,9 +47,6 @@ const Timepicker = () => {
       info={startTime.startTime + date}
     >
       <p>Pick a Time</p>
-      <button onClick={() => changePage("prev")}>Prev</button>
-      <button onClick={() => changePage("next")}>Next</button>
-
       {getDays()
         .splice(page, 1)
         .map((el, index) => {
@@ -54,11 +54,18 @@ const Timepicker = () => {
             <div key={index}>
               {/* Shows week number (-1 otherwise it shows it wrong) */}
               Week :{el.days[0].week() - 1}
+              <BtnsContainer>
+                <button onClick={() => changePage("prev")}>
+                  <PrevIcon />
+                </button>
+                <button onClick={() => changePage("next")}>
+                  <NextIcon />
+                </button>
+              </BtnsContainer>
               <div
                 style={{
                   width: "100%",
-                  border: "1px solid #ffffff",
-                  margin: "5px",
+
                   display: "flex",
                 }}
               >
@@ -69,22 +76,18 @@ const Timepicker = () => {
                       key={index}
                       style={{
                         width: "100%",
-                        border: "1px solid #000000",
-                        margin: "5px",
+                        minHeight: "100px",
+                        border: "1px solid #ccc",
+                        borderRadius: "10px",
+                        margin: 5,
                       }}
                     >
                       {/* Gives the date,date name and month*/}
-                      <div
-                        style={{
-                          width: "100%",
-                          border: "1px solid #000000",
-                          margin: "5px",
-                        }}
-                      >
+                      <DayContainer>
                         {" "}
                         <p>{dayItem.format("MM / Do")}</p>{" "}
                         <p>{dayItem.format("dddd")}</p>{" "}
-                      </div>
+                      </DayContainer>
                       <div style={{ display: "flex", flexDirection: "column" }}>
                         {/* Function checks if worker has schedule this day and loops the times that he is booked*/}
                         <AvaibleTimes dayItem={dayItem} />
