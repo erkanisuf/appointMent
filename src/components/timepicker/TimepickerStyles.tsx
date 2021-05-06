@@ -19,6 +19,7 @@ export const BtnsContainer = styled.div`
     &:nth-last-of-type(1) {
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
+      margin-right: 15px;
     }
     &:nth-last-of-type(2) {
       border-top-left-radius: 10px;
