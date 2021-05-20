@@ -14,21 +14,21 @@ interface IAvaibleTimes {
   dayItem: moment.Moment;
 }
 const appointments = [
-  { date: "2021-05-01 00:00:00.000", startTime: "09:00", duration: 30 },
-  { date: "2021-05-01 00:00:00.000", startTime: "14:30", duration: 30 },
-  { date: "2021-05-02 00:00:00.000", startTime: "15:30", duration: 25 },
-  { date: "2021-05-03 00:00:00.000", startTime: "09:00", duration: 35 },
-  { date: "2021-05-08 00:00:00.000", startTime: "09:00", duration: 45 },
+  { date: "2021-05-23 00:00:00.000", startTime: "09:00", duration: 30 },
+  { date: "2021-05-24 00:00:00.000", startTime: "14:30", duration: 30 },
+  { date: "2021-05-25 00:00:00.000", startTime: "15:30", duration: 25 },
+  { date: "2021-05-26 00:00:00.000", startTime: "09:00", duration: 35 },
+  { date: "2021-05-27 00:00:00.000", startTime: "09:00", duration: 45 },
 ];
 const worker1 = [
-  { date: "2021-05-05 00:00:00.000", workStart: "08:00", workEnd: 17 },
-  { date: "2021-05-06 00:00:00.000", workStart: "15:30", workEnd: 16 },
-  { date: "2021-05-07 00:00:00.000", workStart: "09:00", workEnd: 14 },
-  { date: "2021-05-08 00:00:00.000", workStart: "09:00", workEnd: 12 },
+  { date: "2021-05-23 00:00:00.000", workStart: "08:00", workEnd: 17 },
+  { date: "2021-05-24 00:00:00.000", workStart: "15:30", workEnd: 16 },
+  { date: "2021-05-25 00:00:00.000", workStart: "09:00", workEnd: 14 },
+  { date: "2021-05-16 00:00:00.000", workStart: "09:00", workEnd: 12 },
 ];
 const worker2 = [
-  { date: "2021-05-03 00:00:00.000", workStart: "12:00", workEnd: 18 },
-  { date: "2021-05-08 00:00:00.000", workStart: "09:00", workEnd: 12 },
+  { date: "2021-05-23 00:00:00.000", workStart: "12:00", workEnd: 18 },
+  { date: "2021-05-24 00:00:00.000", workStart: "09:00", workEnd: 12 },
 ];
 const doctor = worker1;
 const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {

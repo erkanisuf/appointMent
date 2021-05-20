@@ -13,7 +13,7 @@ const Main = () => {
         margin: "0 auto",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#fff",
         height: "100%",
         minHeight: "75vh",
         borderRadius: "15px",
