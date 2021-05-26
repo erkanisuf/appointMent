@@ -47,7 +47,7 @@ export const ToggleDiv = styled.div<IToggleDiv>`
   border-bottom-right-radius: ${radiusborder};
 `;
 interface IDivErrorv {
-  display: boolean;
+  display: number;
 }
 export const DivError = styled.div<IDivErrorv>`
   background-color: ${errorColor};
@@ -55,7 +55,7 @@ export const DivError = styled.div<IDivErrorv>`
   font-size: ${errorSize};
   border-radius: 5px;
   padding: 5px;
-  display: ${(props) => (props.display ? "flex" : "none")};
+  display: ${(props) => (props.display === 1 ? "flex" : "none")};
   margin: 0px 15px;
   min-width: 20%;
   justify-content: space-between;
@@ -70,7 +70,7 @@ export const DivInfo = styled.div<IDivErrorv>`
   font-size: ${errorSize};
   border-radius: 5px;
   padding: 5px;
-  display: ${(props) => (props.display ? "flex" : "none")};
+  display: ${(props) => (props.display === 1 ? "flex" : "none")};
   margin: 0px 15px;
   min-width: 20%;
   justify-content: space-between;

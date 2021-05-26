@@ -58,11 +58,11 @@ const Wrapper: React.FC<IWrapper> = ({ children, title, stepNumber, info }) => {
           {toggle ? <ArrowUp /> : <ArrowDown />} {stepNumber}.{title}
         </h1>
         {/* Info display of the selected item by the user (state from redux) */}
-        <DivInfo display={info !== ""}>
+        <DivInfo display={info !== "" ? 1 : 0}>
           <OKIcon />
           <span>{info}</span>
         </DivInfo>
-        <DivError display={error ? true : false}>
+        <DivError display={error ? 1 : 0}>
           <ErrorIcon />
           <span>{error}</span>
         </DivError>

@@ -31,11 +31,12 @@ export const avaibleTimes = (
 // Function that makes times for the booked ones so the upper function can clear them
 export const notAvaibleTimes = (
   minutesParam: number,
-  durationParam: number
+  durationParam: number,
+  thechoosenservice: number
 ): string[] => {
   let minutesInterval = 15; //minutes interval
   let times = []; // time array
-  let minutes = minutesParam; // Value of minutes  e.g start time 540 / 60 = 9 hours
+  let minutes = minutesParam - thechoosenservice; // Value of minutes  e.g start time 540 / 60 = 9 hours
 
   //loop that pushes the times to times array
   for (let i = 0; minutes < durationParam * 60; i++) {
@@ -44,6 +45,8 @@ export const notAvaibleTimes = (
     times[i] = ("0" + (hh % 24)).slice(-2) + ":" + ("0" + mm).slice(-2);
     minutes = minutes + minutesInterval;
   }
-
+  console.log(durationParam * 60, "durationParam Param");
+  console.log(minutes, "minutesParam");
+  console.log(times, "TIMES");
   return times;
 };

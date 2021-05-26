@@ -28,7 +28,7 @@ const Timepicker = () => {
           .fill(0)
           .map(() => date.add(1, "day").clone()),
       });
-    console.log(calendar);
+
     return calendar;
   };
 

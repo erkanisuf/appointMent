@@ -14,22 +14,23 @@ interface IAvaibleTimes {
   dayItem: moment.Moment;
 }
 const appointments = [
-  { date: "2021-05-23 00:00:00.000", startTime: "09:00", duration: 30 },
-  { date: "2021-05-24 00:00:00.000", startTime: "14:30", duration: 30 },
-  { date: "2021-05-25 00:00:00.000", startTime: "15:30", duration: 25 },
-  { date: "2021-05-26 00:00:00.000", startTime: "09:00", duration: 35 },
+  { date: "2021-05-26 00:00:00.000", startTime: "09:00", duration: 30 },
+  { date: "2021-05-28 00:00:00.000", startTime: "14:30", duration: 30 },
+  { date: "2021-05-28 00:00:00.000", startTime: "09:30", duration: 25 },
+  { date: "2021-05-26 00:00:00.000", startTime: "10:00", duration: 35 },
   { date: "2021-05-27 00:00:00.000", startTime: "09:00", duration: 45 },
 ];
 const worker1 = [
-  { date: "2021-05-23 00:00:00.000", workStart: "08:00", workEnd: 17 },
-  { date: "2021-05-24 00:00:00.000", workStart: "15:30", workEnd: 16 },
-  { date: "2021-05-25 00:00:00.000", workStart: "09:00", workEnd: 14 },
-  { date: "2021-05-16 00:00:00.000", workStart: "09:00", workEnd: 12 },
+  { date: "2021-05-26 00:00:00.000", workStart: "08:00", workEnd: 17 },
+  { date: "2021-05-27 00:00:00.000", workStart: "15:30", workEnd: 16 },
+  { date: "2021-05-28 00:00:00.000", workStart: "09:00", workEnd: 14 },
+  { date: "2021-05-19 00:00:00.000", workStart: "09:00", workEnd: 12 },
 ];
 const worker2 = [
   { date: "2021-05-23 00:00:00.000", workStart: "12:00", workEnd: 18 },
   { date: "2021-05-24 00:00:00.000", workStart: "09:00", workEnd: 12 },
 ];
+const choosenService = 60;
 const doctor = worker1;
 const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {
   const [select, setSelect] = useState<string>("");
@@ -65,23 +66,35 @@ const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {
 
     // If there are bookings  shows only free avaible appointments
     if (matchDays.length) {
-      const times = matchDays.map((el) => {
-        const totalBookedTime = moment.duration(el.startTime).asMinutes(); // Transfomrs string (timestart of DB ) to minutes (number)
-        const durationTime =
-          moment.duration(el.startTime).asMinutes() + el.duration; //totalMinutes(number) + the duration of it so we can pass props to next fucntion
-        return notAvaibleTimes(totalBookedTime, durationTime / 60);
-      });
-
-      const emptyArrForMerging: string[] = [];
-      const merged = emptyArrForMerging.concat(...times); // Because times returns nested array , this one destruction and returns and merges all items;
-
-      return avaibleTimes(merged, workstart, workend); // in the upper one its [0] because it should finnd only one
+      return AvaibleTimesHelper(matchDays, workstart, workend);
     }
     // If no appointments made returns times for the full day if the worker has opened his schedule
     else {
       return avaibleTimes([], workstart, workend);
     }
   };
+
+  ///////// Helper function
+  const AvaibleTimesHelper = (
+    matchDays: any[],
+    workstart: number,
+    workend: number
+  ) => {
+    const times = matchDays.map((el: any) => {
+      const totalBookedTime = moment.duration(el.startTime).asMinutes(); // Transfomrs string (timestart of DB ) to minutes (number)
+      const durationTime =
+        moment.duration(el.startTime).asMinutes() + el.duration; //totalMinutes(number) + the duration of it so we can pass props to next fucntion
+      return notAvaibleTimes(
+        totalBookedTime,
+        durationTime / 60,
+        choosenService
+      );
+    });
+    const emptyArrForMerging: string[] = [];
+    const merged = emptyArrForMerging.concat(...times); // Because times returns nested array , this one destruction and returns and merges all items;
+    return avaibleTimes(merged, workstart, workend); // in the upper one its [0] because it should finnd only one
+  };
+
   return (
     <div
       style={{
