@@ -42,7 +42,7 @@ const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {
   const REDUXchangeTime = (e: string) => {
     const randomID = uuidv4();
     dispatch(changeStartTime({ startTime: e, id: randomID })); // Changes Appointment`s start time
-    dispatch(changeDate(dayItem.format("MMM Do YY"))); // Changes Appointment`s date day prop comes from <TimePicker />
+    dispatch(changeDate(dayItem.format())); // Changes Appointment`s date day prop comes from <TimePicker />
     setSelect(randomID); // this one is in combination with REDUXselected for styling . Otherwise styling doesnt get marked.
     dispatch(nextStep(4));
   };
@@ -84,6 +84,7 @@ const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {
       const totalBookedTime = moment.duration(el.startTime).asMinutes(); // Transfomrs string (timestart of DB ) to minutes (number)
       const durationTime =
         moment.duration(el.startTime).asMinutes() + el.duration; //totalMinutes(number) + the duration of it so we can pass props to next fucntion
+
       return notAvaibleTimes(
         totalBookedTime,
         durationTime / 60,
