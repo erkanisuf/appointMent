@@ -19,7 +19,7 @@ const Wrapper: React.FC<IWrapper> = ({ children, title, stepNumber, info }) => {
   const [error, setError] = useState<string>("");
   //Function that toggles automaticly , similar to accordion , depending on Redux`s step.
   const Toggle = () => {
-    if (stepNumber === 2 && !appointment.service.servicename) {
+    if (stepNumber === 2 && !appointment.service.serviceName) {
       setError("Select service first!");
       return;
     }

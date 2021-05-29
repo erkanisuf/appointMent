@@ -14,8 +14,11 @@ interface IInitialState {
 }
 
 export interface Iservice {
-  servicename: string;
-  id: number;
+  serviceName: string;
+  serviceId: number;
+  serviceInfo?: string;
+  imageUrl?: string;
+  duration: number;
 }
 export interface Iworker {
   workername: string;
@@ -28,7 +31,7 @@ export interface IstartTime {
 // Define the initial state using that type
 const initialState: IInitialState = {
   appointment: {
-    service: { servicename: "", id: 0 },
+    service: { serviceName: "", serviceId: 0, duration: 0 },
     startTime: { startTime: "", id: "" },
     duration: 0,
     date: "",
