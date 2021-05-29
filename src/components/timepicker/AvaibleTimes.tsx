@@ -14,14 +14,14 @@ interface IAvaibleTimes {
   dayItem: moment.Moment;
 }
 const appointments = [
-  { date: "2021-05-26 00:00:00.000", startTime: "09:00", duration: 30 },
+  { date: "2021-05-31 00:00:00.000", startTime: "09:00", duration: 30 },
   { date: "2021-05-28 00:00:00.000", startTime: "14:30", duration: 30 },
   { date: "2021-05-28 00:00:00.000", startTime: "09:30", duration: 25 },
   { date: "2021-05-26 00:00:00.000", startTime: "10:00", duration: 35 },
   { date: "2021-05-27 00:00:00.000", startTime: "09:00", duration: 45 },
 ];
 const worker1 = [
-  { date: "2021-05-26 00:00:00.000", workStart: "08:00", workEnd: 17 },
+  { date: "2021-05-31 00:00:00.000", workStart: "08:00", workEnd: 17 },
   { date: "2021-05-27 00:00:00.000", workStart: "15:30", workEnd: 16 },
   { date: "2021-05-28 00:00:00.000", workStart: "09:00", workEnd: 14 },
   { date: "2021-05-19 00:00:00.000", workStart: "09:00", workEnd: 12 },
