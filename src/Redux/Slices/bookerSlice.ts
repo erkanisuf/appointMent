@@ -10,7 +10,7 @@ interface IInitialState {
     date: string;
   };
   step: number;
-  worker: Iworker;
+  employee: IEmployee;
 }
 
 export interface Iservice {
@@ -19,25 +19,39 @@ export interface Iservice {
   serviceInfo?: string;
   imageUrl?: string;
   duration: number;
+  price: number;
 }
-export interface Iworker {
-  workername: string;
-  id: number;
+export interface IEmployee {
+  employeeName: string;
+  employeeId: number;
+  employeeImgLink?: string;
 }
 export interface IstartTime {
   id: string;
   startTime: string;
 }
+const ResetState = () => {
+  return {
+    appointment: {
+      service: { serviceName: "", serviceId: 0, duration: 0, price: 0 },
+      startTime: { startTime: "", id: "" },
+      duration: 0,
+      date: "",
+    },
+    step: 1, //step is used for the toggling
+    employee: { employeeName: "", employeeId: 0 }, //
+  };
+};
 // Define the initial state using that type
 const initialState: IInitialState = {
   appointment: {
-    service: { serviceName: "", serviceId: 0, duration: 0 },
+    service: { serviceName: "", serviceId: 0, duration: 0, price: 0 },
     startTime: { startTime: "", id: "" },
     duration: 0,
     date: "",
   },
   step: 1, //step is used for the toggling
-  worker: { workername: "", id: 0 }, //
+  employee: { employeeName: "", employeeId: 0 }, //
 };
 
 export const bookerSlice = createSlice({
@@ -57,11 +71,16 @@ export const bookerSlice = createSlice({
     changeDuration: (state, action: PayloadAction<number>) => {
       state.appointment.duration = action.payload;
     },
-    changeWorker: (state, action: PayloadAction<Iworker>) => {
-      state.worker = action.payload;
+    changeWorker: (state, action: PayloadAction<IEmployee>) => {
+      state.employee = action.payload;
     },
     nextStep: (state, action: PayloadAction<number>) => {
       state.step = action.payload;
+    },
+    ResetREDUX: (state) => {
+      state.appointment = ResetState().appointment;
+      state.employee = ResetState().employee;
+      state.step = ResetState().step;
     },
   },
 });
@@ -73,6 +92,7 @@ export const {
   nextStep,
   changeDate,
   changeWorker,
+  ResetREDUX,
 } = bookerSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

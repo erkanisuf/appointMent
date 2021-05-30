@@ -28,9 +28,9 @@ const Servicepicker = () => {
     dispatch(nextStep(2)); // opens/toggles component <TimePicker />
   };
   const { data, loading, error } = useFetch(
-    "http://localhost:5001/api/Service"
+    `${process.env.REACT_APP_SERVER_URL}/api/Service`
   );
-  console.log(data, loading, error);
+
   return (
     <Wrapper title={"Select service"} stepNumber={1} info={serviceName}>
       <Spinner data={data} loading={loading} error={error}>
@@ -43,13 +43,17 @@ const Servicepicker = () => {
             width: "100%",
           }}
         >
-          {data.map((el, index) => {
+          {data.map((el: Iservice, index: number) => {
             return (
               <StyleItem key={index} onClick={() => changeReduxService(el)}>
                 <div>
                   {" "}
                   <img
-                    src="https://www.svgrepo.com/show/20577/vaccine.svg"
+                    src={
+                      el.imageUrl
+                        ? el.imageUrl
+                        : "https://www.svgrepo.com/show/20577/vaccine.svg"
+                    }
                     alt="random"
                     width="50px"
                   />

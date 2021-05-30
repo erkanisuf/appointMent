@@ -9,30 +9,36 @@ import {
 import { avaibleTimes, notAvaibleTimes } from "../../utils/Functions";
 import { v4 as uuidv4 } from "uuid";
 import { TimeItem } from "./TimepickerStyles";
+import useFetch from "../../utils/useFetch";
 
 interface IAvaibleTimes {
   dayItem: moment.Moment;
 }
 const appointments = [
-  { date: "2021-05-31 00:00:00.000", startTime: "09:00", duration: 30 },
+  { date: "2021-05-31 00:00:00.000", startTime: "12:30", duration: 30 },
   { date: "2021-05-28 00:00:00.000", startTime: "14:30", duration: 30 },
   { date: "2021-05-28 00:00:00.000", startTime: "09:30", duration: 25 },
   { date: "2021-05-26 00:00:00.000", startTime: "10:00", duration: 35 },
   { date: "2021-05-27 00:00:00.000", startTime: "09:00", duration: 45 },
 ];
-const worker1 = [
-  { date: "2021-05-31 00:00:00.000", workStart: "08:00", workEnd: 17 },
-  { date: "2021-05-27 00:00:00.000", workStart: "15:30", workEnd: 16 },
-  { date: "2021-05-28 00:00:00.000", workStart: "09:00", workEnd: 14 },
-  { date: "2021-05-19 00:00:00.000", workStart: "09:00", workEnd: 12 },
-];
-const worker2 = [
-  { date: "2021-05-23 00:00:00.000", workStart: "12:00", workEnd: 18 },
-  { date: "2021-05-24 00:00:00.000", workStart: "09:00", workEnd: 12 },
-];
+// const worker1 = [
+//   { date: "2021-05-31 00:00:00.000", workStart: "12:30", workEnd: "21:00" },
+//   { date: "2021-05-27 00:00:00.000", workStart: "15:30", workEnd: 16 },
+//   { date: "2021-05-28 00:00:00.000", workStart: "09:00", workEnd: 14 },
+//   { date: "2021-05-19 00:00:00.000", workStart: "09:00", workEnd: 12 },
+// ];
+// const worker2 = [
+//   { date: "2021-05-23 00:00:00.000", workStart: "12:00", workEnd: 18 },
+//   { date: "2021-05-24 00:00:00.000", workStart: "09:00", workEnd: 12 },
+// ];
+// const doctor = worker1;
 const choosenService = 60;
-const doctor = worker1;
+
 const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {
+  const { data, loading, error } = useFetch(
+    `${process.env.REACT_APP_SERVER_URL}/api/Employee/Schedules`
+  ); // fetches from DB workers schedule.
+  console.log(data, "DATASchedule");
   const [select, setSelect] = useState<string>("");
   const REDUXselected = useAppSelector(
     (state) => state.bookerSlice.appointment.startTime
@@ -52,12 +58,14 @@ const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {
     let workend: number = 0;
 
     // Finds Work Schedule of the worker for the day
-    const matchWorkTimes = doctor.filter(
+    const matchWorkTimes = data.filter(
       (el) => moment(el.date).format("MMM Do YY") === e
     );
     if (matchWorkTimes.length) {
       workstart = moment.duration(matchWorkTimes[0].workStart).asMinutes();
-      workend = matchWorkTimes[0].workEnd;
+      workend = moment.duration(matchWorkTimes[0].workEnd).asMinutes();
+      console.log(workend, "WORKEND");
+      // workend = matchWorkTimes[0].workEnd;
     }
     //Matches workers appointments with the days so later i can not show the booked days
     const matchDays = appointments.filter(

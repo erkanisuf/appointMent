@@ -3,10 +3,12 @@ import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
 import {
   changeService,
   changeWorker,
-  Iworker,
+  IEmployee,
   nextStep,
 } from "../../Redux/Slices/bookerSlice";
+import useFetch from "../../utils/useFetch";
 import Wrapper from "../../utils/Wrapper";
+import Spinner from "../Spinner/Spinner";
 import { StyleItemWorker } from "./WorkerStyles";
 
 const workers = [
@@ -16,41 +18,56 @@ const workers = [
 ];
 const Workerpicker = () => {
   const dispatch = useAppDispatch();
-  const { workername } = useAppSelector((state) => state.bookerSlice.worker); //Redux selector
-  const changeReduxService = (e: Iworker) => {
+  const { employeeName } = useAppSelector(
+    (state) => state.bookerSlice.employee
+  ); //Redux selector
+  const { data, loading, error } = useFetch(
+    `${process.env.REACT_APP_SERVER_URL}/api/Employee/Index`
+  );
+
+  const changeReduxService = (e: IEmployee) => {
     dispatch(changeWorker(e));
     dispatch(nextStep(3));
   };
   return (
-    <Wrapper title={"Select worker"} stepNumber={2} info={workername}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          flexWrap: "wrap",
-          margin: "0 auto",
-          width: "100%",
-        }}
-      >
-        {workers.map((el, index) => {
-          return (
-            <StyleItemWorker key={index} onClick={() => changeReduxService(el)}>
-              <div>
-                {" "}
-                <img
-                  src="https://www.pinnaclecare.com/wp-content/uploads/2017/12/bigstock-African-young-doctor-portrait-28825394.jpg.webp"
-                  alt="random"
-                />
-              </div>
+    <Wrapper title={"Select employee"} stepNumber={2} info={employeeName}>
+      <Spinner data={data} loading={loading} error={error}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            flexWrap: "wrap",
+            margin: "0 auto",
+            width: "100%",
+          }}
+        >
+          {data.map((el: IEmployee, index: number) => {
+            return (
+              <StyleItemWorker
+                key={index}
+                onClick={() => changeReduxService(el)}
+              >
+                <div>
+                  {" "}
+                  <img
+                    src={
+                      el.employeeImgLink
+                        ? el.employeeImgLink
+                        : "https://bizraise.pro/wp-content/uploads/2014/09/no-avatar.png"
+                    }
+                    alt="random"
+                  />
+                </div>
 
-              <div>
-                <p>{el.workername}</p>
-                <p>Kampaaja</p>
-              </div>
-            </StyleItemWorker>
-          );
-        })}{" "}
-      </div>
+                <div>
+                  <p>{el.employeeName}</p>
+                  <p>Kampaaja</p>
+                </div>
+              </StyleItemWorker>
+            );
+          })}{" "}
+        </div>
+      </Spinner>
     </Wrapper>
   );
 };

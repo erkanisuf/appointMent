@@ -44,7 +44,11 @@ const Timepicker = () => {
     <Wrapper
       title={"Time picker"}
       stepNumber={3}
-      info={`${startTime.startTime} - ${moment(date).format("MMM Do YY")}`}
+      info={
+        startTime && date
+          ? `${startTime.startTime} - ${moment(date).format("MMM Do YY")}`
+          : ""
+      }
     >
       <p>Pick a Time</p>
       {getDays()

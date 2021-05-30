@@ -11,7 +11,7 @@ interface IWrapper {
 }
 // Example usage:    <Wrapper title={"Some string name here"} stepNumber={1}> // stepNumber if matches with redux Step , then component toggles to true;
 const Wrapper: React.FC<IWrapper> = ({ children, title, stepNumber, info }) => {
-  const { appointment, worker, step } = useAppSelector(
+  const { appointment, employee, step } = useAppSelector(
     (state) => state.bookerSlice
   ); // Redux State selector
   const dispatch = useAppDispatch(); //Redux Dispatch
@@ -23,8 +23,8 @@ const Wrapper: React.FC<IWrapper> = ({ children, title, stepNumber, info }) => {
       setError("Select service first!");
       return;
     }
-    if (stepNumber === 3 && !worker.workername) {
-      setError("Select Worker !");
+    if (stepNumber === 3 && !employee.employeeName) {
+      setError("Select employee !");
       return;
     }
     if (stepNumber === 4 && !appointment.startTime.startTime) {
@@ -44,7 +44,7 @@ const Wrapper: React.FC<IWrapper> = ({ children, title, stepNumber, info }) => {
       setToggle(false);
     }
     return () => {};
-  }, [step, stepNumber, appointment, worker]);
+  }, [step, stepNumber, appointment, employee]);
   return (
     <Section>
       <div

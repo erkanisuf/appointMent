@@ -15,9 +15,9 @@ export const StyleItem = styled.div`
     border: 1px solid #ccc;
     background-color: white;
     padding: 5px;
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
     margin: 15px;
   }
   p:nth-of-type(1) {

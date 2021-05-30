@@ -18,7 +18,7 @@ export const avaibleTimes = (
   let minutes = startWork; // Value of minutes  e.g start time 540 / 60 = 9 hours
 
   //loop that pushes the times to times array
-  for (let i = 0; minutes < endWork * 60; i++) {
+  for (let i = 0; minutes < endWork; i++) {
     let hh = Math.floor(minutes / 60); // geminutesing hours of day in 0-24 format
     let mm = minutes % 60; // geminutesing minutes of the hour in 0-55 format
     times[i] = ("0" + (hh % 24)).slice(-2) + ":" + ("0" + mm).slice(-2);
