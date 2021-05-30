@@ -1,3 +1,5 @@
+import { errorSize } from "./WrapperStyles";
+
 // Convert String time to Minutes (other fucntions require minutes value)
 export const stringTimeToMinutes = (input: string): number => {
   let hms = input; //  string e.g "09:45:33"
@@ -49,4 +51,15 @@ export const notAvaibleTimes = (
   console.log(minutes, "minutesParam");
   console.log(times, "TIMES");
   return times;
+};
+
+// Merges array of .catch error if the backend sends
+
+export const MergeErrors = (errors: Array<any>) => {
+  const emptyArr: Array<string> = [];
+
+  errors.map((element) => {
+    return emptyArr.push(element[0]);
+  });
+  return emptyArr;
 };

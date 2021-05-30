@@ -1,18 +1,48 @@
 import React from "react";
+import { SadIcon, SpinnerIcon } from "../../utils/IconsStyled";
 
 interface ISpinner {
   children: React.ReactNode;
   data: any;
   loading: boolean;
   error: boolean;
+  errorlist?: string[];
 }
-const Spinner: React.FC<ISpinner> = ({ children, data, error, loading }) => {
+const Spinner: React.FC<ISpinner> = ({
+  children,
+  data,
+  error,
+  loading,
+  errorlist,
+}) => {
   if (!data) {
-    return <h1>Nodata</h1>;
+    return <div>Nodata</div>;
   } else if (error) {
-    return <h1>Error something went wrong!Try again..</h1>;
+    return (
+      <div>
+        {" "}
+        {error && (
+          <>
+            <SadIcon />
+            <p>Something Went wrong !</p>
+            {errorlist?.map((el: string, index: number) => {
+              return (
+                <div style={{ color: "red" }} key={index}>
+                  {el}
+                </div>
+              );
+            })}
+          </>
+        )}
+      </div>
+    );
   } else if (loading) {
-    return <h1>Loading..</h1>;
+    return (
+      <div>
+        <SpinnerIcon />
+        <p>Please wait while loading...</p>
+      </div>
+    );
   } else return <div>{children}</div>;
 };
 
