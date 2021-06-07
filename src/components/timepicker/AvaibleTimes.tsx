@@ -5,6 +5,7 @@ import {
   changeDate,
   changeStartTime,
   nextStep,
+  ResetREDUX,
 } from "../../Redux/Slices/bookerSlice";
 import { avaibleTimes, notAvaibleTimes } from "../../utils/Functions";
 import { v4 as uuidv4 } from "uuid";
@@ -15,42 +16,49 @@ interface IAvaibleTimes {
   dayItem: moment.Moment;
 }
 const appointments = [
-  { date: "2021-05-31 00:00:00.000", startTime: "12:30", duration: 30 },
-  { date: "2021-05-28 00:00:00.000", startTime: "14:30", duration: 30 },
-  { date: "2021-05-28 00:00:00.000", startTime: "09:30", duration: 25 },
-  { date: "2021-05-26 00:00:00.000", startTime: "10:00", duration: 35 },
-  { date: "2021-05-27 00:00:00.000", startTime: "09:00", duration: 45 },
+  { date: "2021-06-07 00:00:00.000", startTime: "12:30", duration: 30 },
+  { date: "2021-06-07 00:00:00.000", startTime: "14:30", duration: 30 },
+  { date: "2021-06-07 00:00:00.000", startTime: "09:30", duration: 25 },
+  { date: "2021-06-07 00:00:00.000", startTime: "10:00", duration: 35 },
+  { date: "2021-06-07 00:00:00.000", startTime: "09:00", duration: 45 },
 ];
-// const worker1 = [
-//   { date: "2021-05-31 00:00:00.000", workStart: "12:30", workEnd: "21:00" },
-//   { date: "2021-05-27 00:00:00.000", workStart: "15:30", workEnd: 16 },
-//   { date: "2021-05-28 00:00:00.000", workStart: "09:00", workEnd: 14 },
-//   { date: "2021-05-19 00:00:00.000", workStart: "09:00", workEnd: 12 },
-// ];
-// const worker2 = [
-//   { date: "2021-05-23 00:00:00.000", workStart: "12:00", workEnd: 18 },
-//   { date: "2021-05-24 00:00:00.000", workStart: "09:00", workEnd: 12 },
-// ];
-// const doctor = worker1;
+
 const choosenService = 60;
 
 const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {
-  const { data, loading, error } = useFetch(
-    `${process.env.REACT_APP_SERVER_URL}/api/Employee/Schedules`
-  ); // fetches from DB workers schedule.
-  console.log(data, "DATASchedule");
   const [select, setSelect] = useState<string>("");
+  const EmployeeID = useAppSelector(
+    (state) => state.bookerSlice.employee.employeeId
+  ); //Id of Employee so it can fetch avaible times for him .
   const REDUXselected = useAppSelector(
     (state) => state.bookerSlice.appointment.startTime
   ); //selected time (with uuid ID) , use of this is for the styling
   const dispatch = useAppDispatch(); // Redux dispatch
+  const { data, loading, error } = useFetch(
+    `${process.env.REACT_APP_SERVER_URL}/api/Employee/Schedules/${EmployeeID}`
+  ); // fetches from DB workers schedule.
 
+  //employee`s appointments
+  const employeeAppointments = useFetch(
+    `${process.env.REACT_APP_SERVER_URL}/api/Appointments/GetByEmployee/${EmployeeID}`
+  );
+  console.log(employeeAppointments, "AZ");
   const REDUXchangeTime = (e: string) => {
-    const randomID = uuidv4();
+    const randomID = uuidv4(); // frontend id ,does not have connection with backend
+
     dispatch(changeStartTime({ startTime: e, id: randomID })); // Changes Appointment`s start time
-    dispatch(changeDate(dayItem.format())); // Changes Appointment`s date day prop comes from <TimePicker />
+    dispatch(changeDate(transoformDateToBackend(e))); // Changes Appointment`s date day prop comes from <TimePicker />
     setSelect(randomID); // this one is in combination with REDUXselected for styling . Otherwise styling doesnt get marked.
     dispatch(nextStep(4));
+  };
+
+  // Sets the hours and minutes to the date time that will go to the DB after
+  const transoformDateToBackend = (time: string) => {
+    const result = dayItem
+      .set("hour", Number(time.substring(0, 2)))
+      .set("minutes", Number(time.substring(3, 5)));
+
+    return result.format();
   };
 
   const isWorkingDay = (e: string) => {
@@ -61,14 +69,13 @@ const AvaibleTimes: React.FC<IAvaibleTimes> = ({ dayItem }) => {
     const matchWorkTimes = data.filter(
       (el) => moment(el.date).format("MMM Do YY") === e
     );
+
     if (matchWorkTimes.length) {
       workstart = moment.duration(matchWorkTimes[0].workStart).asMinutes();
       workend = moment.duration(matchWorkTimes[0].workEnd).asMinutes();
-      console.log(workend, "WORKEND");
-      // workend = matchWorkTimes[0].workEnd;
     }
     //Matches workers appointments with the days so later i can not show the booked days
-    const matchDays = appointments.filter(
+    const matchDays = employeeAppointments.data.filter(
       (el) => moment(el.date).format("MMM Do YY") === e
     );
 

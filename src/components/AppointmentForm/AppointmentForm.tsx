@@ -42,7 +42,7 @@ const AppointmentForm = () => {
     setModal(true);
     setLoading(true);
     axios
-      .post("http://localhost:5001/api/Appointments", {
+      .post("http://localhost:5001/api/Appointments/Post", {
         customer: {
           firstName: input.firstName,
           lastName: input.lastName,
@@ -54,7 +54,7 @@ const AppointmentForm = () => {
           date: appointment.date,
           startTime: appointment.startTime.startTime,
           information: input.details,
-          duration: appointment.duration,
+          duration: appointment.service.duration,
           employeeid: employee.employeeId,
           serviceid: appointment.service.serviceId,
         },
